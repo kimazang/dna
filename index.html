@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>큐플레이 DNA 테스트</title>
+    
+    <!-- ========================================== -->
+    <!-- 💖 파비콘 및 SNS 미리보기(Open Graph) 설정 영역 -->
+    <!-- ========================================== -->
+    <!-- 파비콘 (브라우저 탭 아이콘) -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/kimazang/kimazang.github.io/main/qp_favicon.png">
+    
+    <!-- 카카오톡, 페이스북, 디스코드 등 공유 미리보기 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="큐플레이 DNA 테스트">
+    <meta property="og:description" content="내 안의 숨겨진 큐플 본능은? 지금 바로 나의 유저 타입을 알아보자!">
+    <meta property="og:image" content="https://raw.githubusercontent.com/kimazang/kimazang.github.io/main/qplaydnatest_thum.png">
+
+    <!-- 트위터 공유 미리보기 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="큐플레이 DNA 테스트">
+    <meta name="twitter:description" content="내 안의 숨겨진 큐플 본능은? 지금 바로 나의 유저 타입을 알아보자!">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/kimazang/kimazang.github.io/main/qplaydnatest_thum.png">
+    <!-- ========================================== -->
+    
+    <!-- Tailwind CSS & Pixel Font (둥근모꼴) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@latest/neodgm/style.css">
+    
+    <style>
+        /* 기본 배경 (섬세한 픽셀 도트 배경) */
+        body { 
+            font-family: 'NeoDunggeunmo', sans-serif; 
+            background-color: #c4d7f5;
+            background-image: radial-gradient(#8cbcf0 1px, transparent 1px);
+            background-size: 16px 16px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+            color: #1a497d;
+            -webkit-font-smoothing: none;
+            letter-spacing: 0.5px;
+        }
+
+        /* 메인 패널 (얇고 섬세한 2px 테두리) */
+        .qplay-panel {
+            background: #ffffff;
+            border: 2px solid #1a497d;
+            box-shadow: 6px 6px 0px rgba(26, 73, 125, 0.2);
+            width: 100%;
+            max-width: 460px;
+            padding: 6px;
+            border-radius: 4px;
+        }
+
+        /* 내부 영역 */
+        .qplay-inner-box {
+            background-color: #eef5fc;
+            border: 2px solid #1a497d;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 상단 헤더 (디테일한 윈도우 스타일) */
+        .qplay-header {
+            background: linear-gradient(90deg, #3b88e3, #6cb2f9);
+            color: #fff;
+            padding: 6px 12px;
+            border-bottom: 2px solid #1a497d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 0px #0a2342;
+        }
+
+        /* 얇은 픽셀 버튼 공통 (섬세한 클릭감) */
+        .btn-pixel {
+            border: 2px solid #1a497d;
+            box-shadow: 2px 2px 0px #1a497d;
+            transition: transform 0.1s, box-shadow 0.1s;
+            cursor: pointer;
+            width: 100%;
+            display: block;
+            text-align: center;
+            padding: 14px;
+            border-radius: 2px;
+        }
+        .btn-pixel:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px #1a497d;
+        }
+
+        /* 노란색 시작 버튼 */
+        .btn-start {
+            background: #ffeb3b;
+            color: #1a497d;
+            font-size: 1.5rem;
+        }
+        .btn-start:hover {
+            background: #fff066;
+        }
+
+        /* 선택지 옵션 버튼 */
+        .btn-option {
+            background: #ffffff;
+            border-color: #f0547a;
+            box-shadow: 2px 2px 0px #f0547a;
+            color: #1a497d;
+            text-align: left;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+        .btn-option:hover {
+            background: #fff5f7;
+        }
+        .btn-option:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px #f0547a;
+        }
+
+        /* 파란색 버튼 */
+        .btn-blue {
+            background: #4ea3ff;
+            color: #fff;
+            font-size: 1.25rem;
+            text-shadow: 1px 1px 0px #1a497d;
+        }
+        .btn-blue:hover {
+            background: #6cb2f9;
+        }
+
+        /* 입력창 */
+        .qplay-input {
+            border: 2px solid #1a497d;
+            background: #fff;
+            padding: 12px;
+            outline: none;
+            width: 100%;
+            font-size: 1.25rem;
+            text-align: center;
+            color: #1a497d;
+            box-shadow: inset 2px 2px 0px rgba(0,0,0,0.05);
+        }
+        .qplay-input:focus {
+            background: #fffdf0;
+            border-color: #f0547a;
+        }
+
+        /* 진행도 로딩 닷 (작고 귀엽게) */
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            background: #ffffff;
+            padding: 8px;
+            border: 2px solid #8cbcf0;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #eef5fc;
+            border: 1px solid #8cbcf0;
+            border-radius: 50%;
+        }
+        .dot.active {
+            background: #ffeb3b;
+            border-color: #1a497d;
+            box-shadow: inset -1px -1px 0px rgba(0,0,0,0.2);
+        }
+
+        /* 결과창 키워드 뱃지 */
+        .keyword-badge {
+            display: inline-block;
+            background: #ffffff;
+            border: 2px solid #1a497d;
+            color: #f0547a;
+            padding: 6px 10px;
+            margin: 3px;
+            font-size: 0.95rem;
+            box-shadow: 1px 1px 0px #1a497d;
+        }
+
+        /* 프로필 UI 박스 */
+        .profile-box {
+            background: #fff;
+            border: 2px solid #1a497d;
+        }
+        .profile-header {
+            background: #eef5fc;
+            border-bottom: 2px solid #1a497d;
+            color: #1a497d;
+            padding: 6px 10px;
+            font-size: 1rem;
+        }
+
+        /* 섬세한 로고 텍스트 그림자 */
+        .pixel-text-shadow {
+            text-shadow: 2px 2px 0px #1a497d;
+        }
+
+        /* --- ✨ 추가된 데코레이션 애니메이션 --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .floating { animation: float 3s ease-in-out infinite; }
+        .blinking { animation: blink 2s infinite; }
+        
+        .deco-star { color: #ffeb3b; text-shadow: 1px 1px 0px #1a497d; }
+        .deco-heart { color: #f0547a; text-shadow: 1px 1px 0px #1a497d; }
+
+        .hidden { display: none !important; }
+
+        /* Y2K 윈도우 버튼 장식 */
+        .win-btn-group {
+            display: flex;
+            gap: 4px;
+        }
+        .win-btn {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #1a497d;
+            background: #fff;
+            box-shadow: inset -1px -1px 0px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="qplay-panel" id="main-container">
+        
+        <!-- 1. 시작 화면 -->
+        <div id="start-page" class="qplay-inner-box">
+            <div class="qplay-header">
+                <span class="flex items-center gap-2"><span class="text-yellow-300 blinking">★</span> QUIZ_DNA.exe</span>
+                <div class="win-btn-group">
+                    <div class="win-btn"></div>
+                    <div class="win-btn"></div>
+                    <div class="win-btn bg-red-400"></div>
+                </div>
+            </div>
+            
+            <div class="p-6 bg-white m-2 border-2 border-dashed border-[#8cbcf0] text-center relative overflow-hidden">
+                <!-- ✨ 데코 요소 추가 -->
+                <div class="absolute top-4 left-6 text-2xl deco-star floating">✦</div>
+                <div class="absolute bottom-[80px] right-4 text-2xl deco-star floating" style="animation-delay: 1s;">✦</div>
+                <div class="absolute top-10 right-8 text-xl deco-heart floating" style="animation-delay: 0.5s;">♥</div>
+
+                <div class="inline-block px-3 py-1 bg-[#eef5fc] text-[#1a497d] text-sm mb-3 border-2 border-[#1a497d] relative z-10">
+                    내 안의 숨겨진 큐플 본능은?
+                </div>
+                
+                <!-- 선명하고 얇은 픽셀 로고 (위아래 공백 축소) -->
+                <div class="my-3 relative z-10">
+                    <h1 class="text-5xl text-[#ffeb3b] pixel-text-shadow tracking-wide leading-tight inline-block">
+                        QPLAY DNA
+                    </h1>
+                </div>
+                
+                <div class="mb-5 mt-5 relative z-10">
+                    <p class="text-sm text-left mb-1 text-[#1a497d] ml-1 font-bold">아이디 (닉네임)</p>
+                    <input type="text" id="user-nickname" class="qplay-input" placeholder="닉네임 입력" maxlength="8">
+                </div>
+
+                <button onclick="startQuiz()" class="btn-pixel btn-start relative z-10">
+                    테스트 시작
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. 퀴즈 화면 -->
+        <div id="quiz-page" class="hidden qplay-inner-box flex flex-col h-full">
+            <div class="qplay-header">
+                <span class="flex items-center gap-2">게임 진행 중...</span>
+                <span id="progress-text" class="text-yellow-300 text-sm">0 / 12</span>
+            </div>
+            
+            <div class="p-4 bg-white m-2 border-2 border-dashed border-[#8cbcf0] flex-grow flex flex-col justify-center">
+                
+                <!-- 로딩 닷 스타일의 진행도 -->
+                <div class="loading-dots" id="dots-container">
+                    <!-- JS로 채워짐 -->
+                </div>
+                
+                <div class="bg-[#eef5fc] border-2 border-[#1a497d] p-5 mb-6 min-h-[120px] flex items-center justify-center">
+                    <h2 id="question-label" class="text-lg text-center leading-relaxed break-keep text-[#1a497d]">
+                        질문이 여기에 표시됩니다.
+                    </h2>
+                </div>
+
+                <div class="flex flex-col gap-3">
+                    <button id="opt1" class="btn-pixel btn-option" onclick="onSelect(0)"></button>
+                    <button id="opt2" class="btn-pixel btn-option" onclick="onSelect(1)"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 결과 화면 -->
+        <div id="result-page" class="hidden qplay-inner-box">
+            <div class="qplay-header">
+                <span>Result_Info.txt</span>
+                <button class="text-xs bg-[#f0547a] border border-[#1a497d] px-2 py-0.5 text-white" onclick="location.reload()">X</button>
+            </div>
+            
+            <div class="p-4 bg-white m-2 border-2 border-[#eef5fc] relative">
+                <!-- ✨ 데코 요소 추가 -->
+                <div class="absolute top-6 left-3 text-xl deco-star blinking">✦</div>
+                <div class="absolute top-16 right-3 text-2xl deco-heart floating">♥</div>
+
+                <div class="text-center mb-5 pb-2 relative z-10">
+                    <div class="inline-block bg-[#1a497d] text-white px-3 py-1 text-sm mb-3">분석 완료</div>
+                    <h3 class="text-xl mb-3"><span id="final-name" class="text-[#f0547a] text-2xl"></span> 님의 유저 타입</h3>
+                    
+                    <!-- 가시성 극대화: 산뜻한 배경, 진한 글씨, 그림자 제거, 얇은 테두리 -->
+                    <h2 id="final-title" class="text-2xl text-[#1a497d] mb-3 bg-[#ffeb3b] inline-block px-5 py-2 border-2 border-[#1a497d] shadow-[2px_2px_0px_#1a497d]"></h2>
+                    
+                    <p id="final-desc" class="text-sm text-gray-700 leading-relaxed mt-2 break-keep"></p>
+                    
+                    <!-- 핵심 키워드 영역 -->
+                    <div class="mt-4">
+                        <p class="text-sm text-[#1a497d] mb-2 font-bold">당신을 설명하는 키워드!</p>
+                        <div id="final-keywords" class="flex flex-wrap justify-center gap-1">
+                            <!-- JS에서 생성 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 아장 멘트 영역 -->
+                <div class="mb-6 relative z-10">
+                    <p class="text-sm text-[#1a497d] mb-2 pl-1 font-bold">▼ 당신과 잘 맞는 친구는?</p>
+                    <div class="profile-box flex flex-col shadow-[2px_2px_0px_#1a497d]">
+                        <div class="profile-header flex justify-between font-bold">
+                            <span>아장</span>
+                            <span class="text-[#3b88e3] text-sm">LV. 117</span>
+                        </div>
+                        <div class="flex p-3 gap-3 items-center bg-[#fdfdfd]">
+                            <!-- 아장 사진 영역 -->
+                            <div class="w-16 h-16 bg-[#eef5fc] border-2 border-[#1a497d] flex items-center justify-center shrink-0 relative overflow-hidden rounded">
+                                <span class="text-xs text-[#8cbcf0]">사진등록</span>
+                                <!-- 이미지 등록 시 아래 주석 해제 후 src 변경 -->
+                                <!-- <img src="URL" alt="아장" class="absolute inset-0 w-full h-full object-cover"> -->
+                            </div>
+                            
+                            <!-- 멘트(말풍선) 영역 -->
+                            <div class="text-sm text-gray-800 flex-grow bg-white border-2 border-[#1a497d] p-3 relative rounded-lg shadow-[2px_2px_0px_rgba(26,73,125,0.08)]">
+                                <!-- 깔끔하고 자연스러운 CSS 삼각형 꼬리표 -->
+                                <div class="absolute -left-[9px] top-[14px] w-0 h-0 border-t-[6px] border-t-transparent border-r-[8px] border-r-[#1a497d] border-b-[6px] border-b-transparent"></div>
+                                <div class="absolute -left-[6px] top-[14px] w-0 h-0 border-t-[6px] border-t-transparent border-r-[8px] border-r-white border-b-[6px] border-b-transparent z-10"></div>
+                                
+                                <p id="final-friendship" class="leading-relaxed break-keep"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center relative z-10">
+                    <button onclick="location.reload()" class="btn-pixel btn-blue">
+                        대기실로 돌아가기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. 질문 데이터 (12문제) ---
+        const questions = [
+            { type: 'SN', q: "Q. 대기실에서 잠수 타며 멍 때릴 때, 내 머릿속은?", a: ["'쟤네 둘이 그렇고 그런 사인가?', '갑자기 성전환 하면 웃기겠다' 🌀", "N"], b: ["'렙업까지 경험치 얼마나 남았지?', '아까 본 그 옷 얼마더라?' 🧮", "S"] },
+            { type: 'EI', q: "Q. 아장 님의 이벤트가 끝난 후 나의 상태는?", a: ["수고하셨습니다~ 하얗게 불태웠다... 🛏️", "I"], b: ["아, 재밌었다! 뒷풀이 할까요? 더 놀고 싶다! 🔥", "E"] },
+            { type: 'JP', q: "Q. 큐플레이에 접속하는 나의 평소 패턴은?", a: ["'오, 오늘 사람 많네? 이거 할까 저거 할까~' 그때그때 삘 꽂히는 대로 플레이한다. 🎲", "P"], b: ["'오늘은 꼬로록 하면서 돈 좀 모아야지.' 나름의 확고한 목표와 투두리스트가 있다. 📝", "J"] },
+            { type: 'TF', q: "Q. 큐친들이 사소한 문제로 감정싸움을 하고 있다. 이때 나는?", a: ["재밌자고 하는 게임에서 왜 이렇게까지 싸우지 💔", "F"], b: ["흠... 근데 상황을 보면 B 말이 맞는데? ⚖️", "T"] },
+            { type: 'EI', q: "Q. 게임 방에 처음 입장했을 때 나는?", a: ["안녕하세요~ 일단 인사부터 한다. 💬", "E"], b: ["방 분위기랑 유저들 아바타부터 쓱 스캔한다. 👀", "I"] },
+            { type: 'SN', q: "Q. 베스트 드레서 이벤트가 열렸다! 나의 코디 스타일은?", a: ["깔끔한 색감과 조화로운 아이템 조합으로 승부하는 '정석 코디' 👗", "S"], b: ["'이번 컨셉은 마녀...' 나만의 스토리와 세계관이 담긴 '컨셉 코디' 🔮", "N"] },
+            { type: 'JP', q: "Q. 경험치 2배 이벤트라 빡겜하려 했는데, 갑자기 긴급 서버 점검 공지가 떴다!", a: ["갑자기 점검이라고? 끝날 때까지 유튜브나 보고 와야겠네 🍿", "P"], b: ["뭐야? 세팅 다 해놨는데 짜증나네... 프리렌 장난하냐 😤", "J"] },
+            { type: 'TF', q: "Q. 너무 갖고 싶었던 레어템을 드디어 구해서 자랑했다! 내가 듣고 싶은 반응은?", a: ["우와! 매물 없던데 어떻게 구했어? 싸게 잘 샀네! 👏", "T"], b: ["대박,, 너랑 완전 찰떡이야!!! 기분 짱 좋겠다! 🎉", "F"] },
+            { type: 'EI', q: "Q. 게임 몇 판 했더니 같은 방 유저가 친추를 걸었다!", a: ["'헉... 아직 좀 낯선데...' 고민 끝에 조심스레 Yes or No", "I"], b: ["다음에 또 같이 해요! 쿨하게 바로 수락하고 친목 모드 🤝", "E"] },
+            { type: 'TF', q: "Q. 브레인 써바써바 중, 친구의 실수로 아깝게 죽었을 때 내 속마음은?", a: ["아깝다... 친구한테 빨리 괜찮다고 해줘야지. 🥺", "F"], b: ["아깝다... 내가 계산기 켜놨으면 무조건 통과했는데. 🤔", "T"] },
+            { type: 'SN', q: "Q. 공지사항이나 패치노트가 올라왔을 때 나는?", a: ["이거 나오면 떡상각 아님? 앞으로 바뀔 게임 메타를 떠올려 본다. 💭", "N"], b: ["참여 방법, 가격, 리워드 등 정확한 팩트부터 꼼꼼히 정독한다. 📊", "S"] },
+            { type: 'JP', q: "Q. 오늘 밤 9시, 탱글아장배 대회가 열린다!", a: ["8시 50분부터 이미 접속 완료. 손 풀면서 룰 한 번 더 숙지하고 대기한다. ⏰", "J"], b: ["8시 59분에 맞다, 오늘 대회지! 생각나서 헐레벌떡 뛰어 들어간다. 🏃‍♂️", "P"] }
+        ];
+
+        // --- 2. 결과 데이터 ---
+        const results = {
+            "ENTJ": { title: "판을 이끄는 리더", desc: "리더십 있게 분위기를 이끌며 중심을 잡아주는 든든한 타입", keywords: ["#타고난_리더", "#효율성_집착", "#야망_보스", "#전략적_사고"], friendship: "오늘 수다 코스는 그쪽이 정해줘요. 전 옆에서 신나게 떠들 준비 완전 끝났거든요." },
+            "ENTP": { title: "센스 있는 채팅러", desc: "유머러스한 채팅으로 분위기를 하드캐리하는 재치꾼", keywords: ["#아이디어_뱅크", "#유쾌한_관종", "#호기심_천국", "#팩트_폭격기"], friendship: "우리 둘이 입 열면 대기실 조용할 틈이 없겠는데요? 밤새도록 티키타카 가보자고요!" },
+            "INTJ": { title: "조용한 전략가", desc: "말없이 상황을 보다가 필요한 순간에 한 건 하는 타입", keywords: ["#완벽주의자", "#마스터마인드", "#확고한_취향", "#독립적_성향"], friendship: "뻔하지 않은 깊은 대화가 통할 것 같아 너무 설레요. 우리끼리만 아는 얘기 더 해줘요." },
+            "INTP": { title: "파고드는 분석가", desc: "그냥 넘어가지 않고 흐름과 패턴을 따져보는 분석형", keywords: ["#게으른_천재", "#지적_호기심", "#마이웨이", "#논리적_분석"], friendship: "그런 사소하고 특이한 생각은 대체 어떻게 하는 거예요? 궁금해서 밤샐 것 같아요." },
+            "ENFJ": { title: "리액션 끝판왕", desc: "따뜻한 반응과 격려로 분위기를 부드럽게 만드는 타입", keywords: ["#인간_리트리버", "#따뜻한_카리스마", "#공감_만렙", "#프로_오지랖"], friendship: "와, 리액션 최고! 그쪽이랑 대화하면 제 자존감이 막 올라가는 기분이라 너무 좋아요." },
+            "ENFP": { title: "활발한 컨셉장인", desc: "새로운 코디와 상황극으로 즐거움을 주는 분위기 메이커", keywords: ["#인간_비타민", "#자유로운_영혼", "#상상력_대장", "#새로운_것이_좋아"], friendship: "혹시 제 거울 아니세요? 우리 신나게 놀다가 같이 잠수 타는 타이밍도 딱일 듯해요." },
+            "INFJ": { title: "조용한 공감러", desc: "조용히 분위기를 읽고 눈치 있게 맞춰주는 타입", keywords: ["#겉바속촉", "#통찰력_갑", "#보이지_않는_배려", "#속마음_비밀"], friendship: "굳이 긴 말 안 해도 제 마음 다 읽어줄 것만 같아요. 그냥 옆에만 있어도 힐링 돼요." },
+            "INFP": { title: "감성 살리는 낭만러", desc: "예쁜 말과 감성 채팅으로 분위기를 채우는 타입", keywords: ["#프로_몽상가", "#감성_충만", "#평화주의자", "#나만의_신념"], friendship: "우리 감성 진짜 소울메이트급인데요? 예쁜 옷 입고 앉아 소소하게 떠드는 게 최고죠." },
+            "ESTJ": { title: "흐름 잡는 리더", desc: "깔끔하고 매너 있는 태도로 분위기를 정리하며 신뢰를 받는 타입", keywords: ["#인간_엑셀", "#철저한_계획", "#책임감_끝판왕", "#팩트_체크"], friendship: "대화가 착착 진행돼서 너무 시원하고 좋아요. 오늘 못한 수다는 내일 또 이어서 해요!" },
+            "ESTP": { title: "즉흥적 행동파", desc: "빠른 반응과 감각으로 순간의 재미를 찾아내는 타입", keywords: ["#행동파_불도저", "#임기응변_갑", "#스릴_즐김", "#강한_적응력"], friendship: "고민은 사치죠! 당장 들어와서 같이 놀아요. 그쪽이랑 있으면 뭘 해도 다 즐거울 듯해요." },
+            "ISTJ": { title: "묵묵한 성실러", desc: "묵묵하게 자기 방식대로 꾸준히 이어가는 성실한 유저", keywords: ["#원칙주의자", "#성실함의_표본", "#기억력_디테일", "#안정감_최고"], friendship: "제가 했던 사소한 말까지 다 기억해 주다니 감동이에요. 조근조근 얘기하면 참 편해요." },
+            "ISTP": { title: "조용한 실속파", desc: "담백하고 쿨한 태도로 즐기며 알수록 매력적인 스타일", keywords: ["#효율성_최고", "#만사가_귀찮음", "#조용한_관찰자", "#팩트만_말함"], friendship: "억지로 말 안 이어가도 안 어색해서 너무 좋아요. 그냥 같이 서 있기만 해도 이미 찐친!" },
+            "ESFJ": { title: "사람 챙기는 친목러", desc: "모르는 사람이 없는 마당발! 먼저 말 걸고 분위기를 이끄는 타입", keywords: ["#리액션_부자", "#인간관계_중심", "#친화력_대장", "#세심한_챙김"], friendship: "와 보였다! 대기실에서 보이기만 하면 제가 먼저 달려가서 아는 척해도 되죠?" },
+            "ESFP": { title: "시선 끄는 스타", desc: "화려한 아바타와 넘치는 에너지로 분위기를 밝히는 주인공", keywords: ["#분위기_메이커", "#에너지_뿜뿜", "#즉흥적인_즐거움", "#낙천주의자"], friendship: "오늘 우리 둘이 웃고 떠드느라 광대 아플 예정! 그쪽이랑 있으면 세상에서 제일 신나요!" },
+            "ISFJ": { title: "따뜻한 배려요정", desc: "작은 배려로 주변을 편안하게 만드는 따뜻한 존재", keywords: ["#수호천사", "#조용한_헌신", "#디테일_장인", "#갈등은_싫어"], friendship: "제가 조용히 있고 싶을 때 묵묵히 옆을 지켜줄 것 같아 든든해요. 언제든 말 걸어줘요." },
+            "ISFP": { title: "느긋한 평화주의자", desc: "편안한 분위기 속에서 자기만의 속도로 즐기는 평화주의자", keywords: ["#침대와_물아일체", "#갈등_회피러", "#예술적_감각", "#현재를_즐김"], friendship: "우리 명당에 앉아서 멍 때리며 수다나 떨어요. 그쪽이랑 노는 게 제일 편하고 좋아요." }
+        };
+
+        // --- 3. 변수 제어 ---
+        let nickname = "";
+        let currentIdx = 0;
+        let shuffledQuiz = [];
+        let score = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+        function initDots() {
+            const container = document.getElementById('dots-container');
+            container.innerHTML = '';
+            for(let i=0; i<12; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                dot.id = `dot-${i}`;
+                container.appendChild(dot);
+            }
+        }
+
+        function startQuiz() {
+            nickname = document.getElementById('user-nickname').value.trim();
+            if(!nickname) {
+                alert("대기실에서 사용할 아이디를 입력해주세요!");
+                return;
+            }
+            
+            shuffledQuiz = [...questions].sort(() => Math.random() - 0.5);
+            initDots();
+            
+            document.getElementById('start-page').classList.add('hidden');
+            document.getElementById('quiz-page').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const qData = shuffledQuiz[currentIdx];
+            document.getElementById('progress-text').innerText = `${currentIdx + 1} / 12`;
+            document.getElementById('question-label').innerText = qData.q;
+
+            for(let i=0; i<12; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if(i <= currentIdx) dot.classList.add('active');
+                else dot.classList.remove('active');
+            }
+
+            const opts = [
+                { text: qData.a[0], type: qData.a[1] },
+                { text: qData.b[0], type: qData.b[1] }
+            ].sort(() => Math.random() - 0.5);
+
+            const btn1 = document.getElementById('opt1');
+            const btn2 = document.getElementById('opt2');
+            
+            btn1.innerText = opts[0].text;
+            btn1.onclick = () => onSelect(opts[0].type);
+            
+            btn2.innerText = opts[1].text;
+            btn2.onclick = () => onSelect(opts[1].type);
+        }
+
+        function onSelect(type) {
+            score[type]++;
+            currentIdx++;
+
+            if(currentIdx < 12) {
+                renderQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quiz-page').classList.add('hidden');
+            document.getElementById('result-page').classList.remove('hidden');
+
+            let mbti = "";
+            mbti += (score.E >= score.I) ? "E" : "I";
+            mbti += (score.S >= score.N) ? "S" : "N";
+            mbti += (score.T >= score.F) ? "T" : "F";
+            mbti += (score.J >= score.P) ? "J" : "P";
+
+            const data = results[mbti];
+            document.getElementById('final-name').innerText = nickname;
+            document.getElementById('final-title').innerText = data.title;
+            document.getElementById('final-desc').innerText = data.desc;
+            document.getElementById('final-friendship').innerText = data.friendship;
+            
+            const keywordContainer = document.getElementById('final-keywords');
+            keywordContainer.innerHTML = '';
+            data.keywords.forEach(kw => {
+                const span = document.createElement('span');
+                span.className = 'keyword-badge';
+                span.innerText = kw;
+                keywordContainer.appendChild(span);
+            });
+        }
+    </script>
+</body>
+</html>
