@@ -81,12 +81,13 @@
 
         .keyword-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; text-align: left; }
         
-        /* 캡처 하단 쏠림 해결 1: 패딩 제거 및 flex 중앙 정렬 강제 */
+        /* 🔥 쏠림 방지 1: 키워드 뱃지 - 패딩 수치 직접 조절 */
         .keyword-badge { 
             background: #ffffff; border: 2px solid #1a497d; color: #f0547a; 
             font-size: 0.85rem; text-align: center; box-shadow: 2px 2px 0px #1a497d; white-space: nowrap; 
-            display: flex; align-items: center; justify-content: center; 
-            min-height: 36px; padding: 0 4px; 
+            display: block; 
+            height: 38px; line-height: 38px; /* 높이와 줄높이를 맞춰서 중앙 고정 */
+            padding: 0 4px; 
         }
 
         .profile-box { background: #fff; border: 2px solid #1a497d; }
@@ -97,22 +98,22 @@
         .win-btn-group { display: flex; gap: 4px; }
         .win-btn { width: 10px; height: 10px; border: 1px solid #1a497d; background: #fff; }
 
+        /* 🔥 쏠림 방지 2: 설명 문구 줄높이 고정 */
         .capture-fix-text {
-            line-height: 1.5 !important;
-            display: inline-block;
+            line-height: 1.6 !important;
+            display: block;
             width: 100%;
         }
 
-        /* 캡처 하단 쏠림 해결 2: 말풍선 구조를 flex로 변경 */
+        /* 🔥 쏠림 방지 3: 말풍선 - 내부 여백으로 중앙 조절 */
         .speech-bubble {
             background-color: #ffffff;
             border: 2px solid #1a497d;
             position: relative;
             border-radius: 8px;
-            min-height: 70px;
-            display: flex; 
-            align-items: center; 
-            padding: 0 12px; 
+            min-height: 74px;
+            display: block;
+            padding: 16px 12px 10px 12px; /* 위쪽 여백을 더 주어 글자를 아래로 밀거나 위로 올림 */
             text-align: left;
         }
     </style>
@@ -149,8 +150,8 @@
             </div>
             <div class="p-4 bg-white m-2 border-2 border-dashed border-[#8cbcf0] flex-grow flex flex-col justify-center">
                 <div class="loading-dots" id="dots-container"></div>
-                <div class="bg-[#eef5fc] border-2 border-[#1a497d] p-4 mb-5 min-h-[110px] flex items-center justify-center">
-                    <h2 id="question-label" class="text-base text-center leading-relaxed break-keep text-[#1a497d] font-bold">질문 로딩 중...</h2>
+                <div class="bg-[#eef5fc] border-2 border-[#1a497d] p-4 mb-5 min-h-[110px] flex items-center justify-center text-center">
+                    <h2 id="question-label" class="text-base leading-relaxed break-keep text-[#1a497d] font-bold">질문 로딩 중...</h2>
                 </div>
                 <div class="flex flex-col gap-3">
                     <button id="opt1" class="btn-pixel btn-option text-sm"></button>
@@ -173,14 +174,15 @@
                     </div>
                     
                     <div class="p-4 bg-white m-2 border-2 border-[#eef5fc] relative text-center">
-                        <div class="inline-flex items-center justify-center bg-[#1a497d] text-white text-xs mb-2" style="min-height: 24px; padding: 0 12px;">분석 완료</div>
+                        <div class="inline-block bg-[#1a497d] text-white text-xs mb-2" style="padding: 6px 12px 4px 12px; line-height: 1;">분석 완료</div>
+                        
                         <h3 class="text-lg mb-2 font-bold"><span id="final-name" class="text-[#f0547a] text-xl"></span> 님의 유저 타입</h3>
                         
                         <div class="mb-3">
-                            <h2 id="final-title" class="text-xl text-[#1a497d] bg-[#ffeb3b] inline-flex items-center justify-center border-2 border-[#1a497d] shadow-[2px_2px_0px_#1a497d] font-bold" style="min-height: 46px; padding: 0 16px;"></h2>
+                            <h2 id="final-title" class="text-xl text-[#1a497d] bg-[#ffeb3b] border-2 border-[#1a497d] shadow-[2px_2px_0px_#1a497d] font-bold inline-block" style="height: 48px; line-height: 48px; padding: 0 20px;"></h2>
                         </div>
                         
-                        <div style="min-height: 40px; display: flex; align-items: center; justify-content: center;">
+                        <div style="min-height: 50px; padding-top: 10px;">
                             <p id="final-desc" class="text-xs text-gray-700 break-keep font-bold capture-fix-text"></p>
                         </div>
 
@@ -325,15 +327,24 @@
         }
 
         function saveResultImage() {
-            // 폰트 렌더링이 완전히 끝난 후 캡처를 실행하도록 강제 보장
+            // 폰트가 준비될 때까지 대기 후 캡처
             document.fonts.ready.then(() => {
                 const target = document.getElementById('capture-area');
                 
                 html2canvas(target, {
                     useCORS: true,
                     backgroundColor: "#ffffff",
-                    scale: 2,
-                    logging: false
+                    scale: 3, // 해상도 대폭 상향
+                    logging: false,
+                    // 캡처 시 폰트 정렬 오류 방지용 옵션
+                    onclone: (clonedDoc) => {
+                        const badges = clonedDoc.getElementsByClassName('keyword-badge');
+                        for(let b of badges) {
+                            b.style.paddingTop = "4px"; // 캡처본에서만 살짝 아래로 밀기
+                        }
+                        const title = clonedDoc.getElementById('final-title');
+                        if(title) title.style.paddingTop = "6px";
+                    }
                 }).then(canvas => {
                     const imgUrl = canvas.toDataURL('image/png');
                     const link = document.createElement('a');
