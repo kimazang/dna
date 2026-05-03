@@ -26,7 +26,6 @@
             color: #1a497d;
         }
 
-        /* 캡처될 영역을 포함한 전체 판넬 디자인 */
         .qplay-panel {
             background: #ffffff;
             border: 2px solid #1a497d;
@@ -81,7 +80,14 @@
         .dot.active { background: #ffeb3b; border-color: #1a497d; }
 
         .keyword-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; text-align: left; }
-        .keyword-badge { background: #ffffff; border: 2px solid #1a497d; color: #f0547a; padding: 8px 4px; font-size: 0.85rem; text-align: center; box-shadow: 2px 2px 0px #1a497d; white-space: nowrap; }
+        
+        /* 캡처 하단 쏠림 해결 1: 패딩 제거 및 flex 중앙 정렬 강제 */
+        .keyword-badge { 
+            background: #ffffff; border: 2px solid #1a497d; color: #f0547a; 
+            font-size: 0.85rem; text-align: center; box-shadow: 2px 2px 0px #1a497d; white-space: nowrap; 
+            display: flex; align-items: center; justify-content: center; 
+            min-height: 36px; padding: 0 4px; 
+        }
 
         .profile-box { background: #fff; border: 2px solid #1a497d; }
         .profile-header { background: #eef5fc; border-bottom: 2px solid #1a497d; color: #1a497d; padding: 6px 10px; font-size: 0.9rem; text-align: left; }
@@ -91,23 +97,22 @@
         .win-btn-group { display: flex; gap: 4px; }
         .win-btn { width: 10px; height: 10px; border: 1px solid #1a497d; background: #fff; }
 
-        /* 텍스트 캡처 보정용 스타일 */
         .capture-fix-text {
             line-height: 1.5 !important;
-            padding-top: 2px;
-            padding-bottom: 2px;
             display: inline-block;
+            width: 100%;
         }
 
-        /* 말풍선 정렬 보정: Flex 대신 고정 Padding 사용 */
+        /* 캡처 하단 쏠림 해결 2: 말풍선 구조를 flex로 변경 */
         .speech-bubble {
             background-color: #ffffff;
             border: 2px solid #1a497d;
-            padding: 15px 12px; 
             position: relative;
             border-radius: 8px;
             min-height: 70px;
-            display: block; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 12px; 
             text-align: left;
         }
     </style>
@@ -168,12 +173,14 @@
                     </div>
                     
                     <div class="p-4 bg-white m-2 border-2 border-[#eef5fc] relative text-center">
-                        <div class="inline-block bg-[#1a497d] text-white px-3 py-1 text-xs mb-2">분석 완료</div>
+                        <div class="inline-flex items-center justify-center bg-[#1a497d] text-white text-xs mb-2" style="min-height: 24px; padding: 0 12px;">분석 완료</div>
                         <h3 class="text-lg mb-2 font-bold"><span id="final-name" class="text-[#f0547a] text-xl"></span> 님의 유저 타입</h3>
+                        
                         <div class="mb-3">
-                            <h2 id="final-title" class="text-xl text-[#1a497d] bg-[#ffeb3b] inline-block px-4 py-2 border-2 border-[#1a497d] shadow-[2px_2px_0px_#1a497d] font-bold"></h2>
+                            <h2 id="final-title" class="text-xl text-[#1a497d] bg-[#ffeb3b] inline-flex items-center justify-center border-2 border-[#1a497d] shadow-[2px_2px_0px_#1a497d] font-bold" style="min-height: 46px; padding: 0 16px;"></h2>
                         </div>
-                        <div style="min-height: 40px;">
+                        
+                        <div style="min-height: 40px; display: flex; align-items: center; justify-content: center;">
                             <p id="final-desc" class="text-xs text-gray-700 break-keep font-bold capture-fix-text"></p>
                         </div>
 
@@ -213,7 +220,6 @@
     </div>
 
     <script>
-        // 질문 데이터 및 로직은 이전과 동일
         const questions = [
             { type: 'SN', q: "Q. 대기실에서 잠수 타며 멍 때릴 때, 내 머릿속은?", a: ["'쟤네 둘이 그렇고 그런 사인가?', '갑자기 성전환 하면 웃기겠다' 🌀", "N"], b: ["'렙업까지 경험치 얼마나 남았지?', '아까 본 그 옷 얼마더라?' 🧮", "S"] },
             { type: 'EI', q: "Q. 아장 님의 이벤트가 끝난 후 나의 상태는?", a: ["수고하셨습니다~ 하얗게 불태웠다... 🛏️", "I"], b: ["아, 재밌었다! 뒷풀이 할까요? 더 놀고 싶다! 🔥", "E"] },
@@ -311,7 +317,7 @@
             const keywordContainer = document.getElementById('final-keywords');
             keywordContainer.innerHTML = '';
             data.keywords.forEach(kw => {
-                const span = document.createElement('span');
+                const span = document.createElement('div');
                 span.className = 'keyword-badge';
                 span.innerText = kw;
                 keywordContainer.appendChild(span);
@@ -319,24 +325,24 @@
         }
 
         function saveResultImage() {
-            const target = document.getElementById('capture-area');
-            
-            // 캡처 설정 보정
-            html2canvas(target, {
-                useCORS: true,
-                backgroundColor: "#ffffff", // 배경을 흰색으로 고정
-                scale: 3, // 해상도를 더 높여 텍스트 뭉개짐 방지
-                logging: false,
-                width: target.offsetWidth,
-                height: target.offsetHeight
-            }).then(canvas => {
-                const imgUrl = canvas.toDataURL('image/png');
-                const link = document.createElement('a');
-                link.href = imgUrl;
-                link.download = `${nickname}_큐플DNA.png`;
-                link.click();
-            }).catch(err => {
-                alert('이미지 생성에 실패했습니다.');
+            // 폰트 렌더링이 완전히 끝난 후 캡처를 실행하도록 강제 보장
+            document.fonts.ready.then(() => {
+                const target = document.getElementById('capture-area');
+                
+                html2canvas(target, {
+                    useCORS: true,
+                    backgroundColor: "#ffffff",
+                    scale: 2,
+                    logging: false
+                }).then(canvas => {
+                    const imgUrl = canvas.toDataURL('image/png');
+                    const link = document.createElement('a');
+                    link.href = imgUrl;
+                    link.download = `${nickname}_큐플DNA.png`;
+                    link.click();
+                }).catch(err => {
+                    alert('이미지 생성에 실패했습니다.');
+                });
             });
         }
     </script>
