@@ -6,11 +6,7 @@
     <title>큐플레이 DNA 테스트</title>
     
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/kimazang/kimazang.github.io/main/qp_favicon.png">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="큐플레이 DNA 테스트">
-    <meta property="og:description" content="내 안의 숨겨진 큐플 본능은? 지금 바로 나의 유저 타입을 알아보자!">
-    <meta property="og:image" content="https://raw.githubusercontent.com/kimazang/dna/main/qplaydnatest_thum.png">
-
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/neodgm/neodgm-webfont@latest/neodgm/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -30,6 +26,7 @@
             color: #1a497d;
         }
 
+        /* 캡처될 영역을 포함한 전체 판넬 디자인 */
         .qplay-panel {
             background: #ffffff;
             border: 2px solid #1a497d;
@@ -94,21 +91,24 @@
         .win-btn-group { display: flex; gap: 4px; }
         .win-btn { width: 10px; height: 10px; border: 1px solid #1a497d; background: #fff; }
 
-        /* 캡처 시 텍스트 밀림 방지용 보정 스타일 */
+        /* 텍스트 캡처 보정용 스타일 */
         .capture-fix-text {
-            line-height: 1.6 !important;
-            display: block;
-            width: 100%;
+            line-height: 1.5 !important;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            display: inline-block;
         }
-        /* 말풍선 수직 정렬 보정 (Flex 대신 Padding 사용) */
+
+        /* 말풍선 정렬 보정: Flex 대신 고정 Padding 사용 */
         .speech-bubble {
             background-color: #ffffff;
             border: 2px solid #1a497d;
-            padding: 12px 10px; /* 상하 여백을 직접 줌 */
+            padding: 15px 12px; 
             position: relative;
             border-radius: 8px;
-            min-height: 60px;
+            min-height: 70px;
             display: block; 
+            text-align: left;
         }
     </style>
 </head>
@@ -127,9 +127,7 @@
             </div>
             
             <div class="p-5 bg-white m-2 border-2 border-dashed border-[#8cbcf0] text-center relative overflow-hidden">
-                <div class="inline-block px-3 py-1 bg-[#eef5fc] text-[#1a497d] text-sm mb-2 border-2 border-[#1a497d] font-bold">
-                    내 안의 숨겨진 큐플 본능은?
-                </div>
+                <div class="inline-block px-3 py-1 bg-[#eef5fc] text-[#1a497d] text-sm mb-2 border-2 border-[#1a497d] font-bold">내 안의 숨겨진 큐플 본능은?</div>
                 <div class="my-2"><h1 class="text-4xl text-[#ffeb3b] pixel-text-shadow tracking-wide leading-tight inline-block">QPLAY DNA</h1></div>
                 <div class="mb-4 mt-4 text-left">
                     <p class="text-sm mb-1 text-[#1a497d] ml-1 font-bold">닉네임</p>
@@ -157,54 +155,57 @@
         </div>
 
         <div id="result-page" class="hidden">
-            <div id="capture-target" class="qplay-inner-box" style="background-color: #eef5fc;">
-                <div class="qplay-header">
-                    <span>Result_Info.txt</span>
-                    <div class="win-btn-group">
-                        <div class="win-btn"></div>
-                        <div class="win-btn"></div>
-                        <div class="win-btn bg-red-400"></div>
-                    </div>
-                </div>
+            <div id="capture-area" style="padding: 5px; background-color: #ffffff; border: 2px solid #1a497d; border-radius: 4px; display: inline-block; width: 100%;">
                 
-                <div class="p-4 bg-white m-2 border-2 border-[#eef5fc] relative">
-                    <div class="text-center mb-4">
+                <div class="qplay-inner-box" style="background-color: #eef5fc;">
+                    <div class="qplay-header" style="background: linear-gradient(90deg, #3b88e3, #6cb2f9); border-bottom: 2px solid #1a497d;">
+                        <span>Result_Info.txt</span>
+                        <div class="win-btn-group">
+                            <div class="win-btn"></div>
+                            <div class="win-btn"></div>
+                            <div class="win-btn bg-red-400"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-white m-2 border-2 border-[#eef5fc] relative text-center">
                         <div class="inline-block bg-[#1a497d] text-white px-3 py-1 text-xs mb-2">분석 완료</div>
                         <h3 class="text-lg mb-2 font-bold"><span id="final-name" class="text-[#f0547a] text-xl"></span> 님의 유저 타입</h3>
                         <div class="mb-3">
                             <h2 id="final-title" class="text-xl text-[#1a497d] bg-[#ffeb3b] inline-block px-4 py-2 border-2 border-[#1a497d] shadow-[2px_2px_0px_#1a497d] font-bold"></h2>
                         </div>
-                        <p id="final-desc" class="text-xs text-gray-700 break-keep font-bold capture-fix-text"></p>
-                    </div>
+                        <div style="min-height: 40px;">
+                            <p id="final-desc" class="text-xs text-gray-700 break-keep font-bold capture-fix-text"></p>
+                        </div>
 
-                    <div class="mt-4 mb-4 text-left">
-                        <p id="res-keywords-header" class="text-sm text-[#1a497d] mb-2 font-bold"></p>
-                        <div id="final-keywords" class="keyword-grid"></div>
-                    </div>
+                        <div class="mt-4 mb-4 text-left">
+                            <p id="res-keywords-header" class="text-sm text-[#1a497d] mb-2 font-bold"></p>
+                            <div id="final-keywords" class="keyword-grid"></div>
+                        </div>
 
-                    <div class="mb-2 text-left">
-                        <p id="res-friends-header" class="text-sm text-[#1a497d] mb-2 pl-1 font-bold"></p>
-                        <div class="profile-box flex flex-col shadow-[2px_2px_0px_#1a497d]">
-                            <div class="profile-header flex justify-between font-bold">
-                                <span>아장</span>
-                                <span class="text-[#3b88e3] text-xs">MBTI는 CUTE</span>
-                            </div>
-                            <div class="flex p-3 gap-3 bg-[#fdfdfd]">
-                                <div class="w-14 h-14 bg-[#eef5fc] border-2 border-[#1a497d] shrink-0 relative overflow-hidden rounded">
-                                    <img src="https://raw.githubusercontent.com/kimazang/kimazang.github.io/main/az_devil.png" alt="아장" crossorigin="anonymous" class="w-full h-full object-cover">
+                        <div class="mb-2 text-left">
+                            <p id="res-friends-header" class="text-sm text-[#1a497d] mb-2 pl-1 font-bold"></p>
+                            <div class="profile-box flex flex-col shadow-[2px_2px_0px_#1a497d]">
+                                <div class="profile-header flex justify-between font-bold">
+                                    <span>아장</span>
+                                    <span class="text-[#3b88e3] text-xs">MBTI는 CUTE</span>
                                 </div>
-                                <div class="speech-bubble flex-grow">
-                                    <div class="absolute -left-[9px] top-[15px] w-0 h-0 border-t-[5px] border-t-transparent border-r-[8px] border-r-[#1a497d] border-b-[5px] border-b-transparent"></div>
-                                    <div class="absolute -left-[6px] top-[15px] w-0 h-0 border-t-[5px] border-t-transparent border-r-[8px] border-r-white border-b-[5px] border-b-transparent z-10"></div>
-                                    <p id="final-friendship" class="text-xs font-bold capture-fix-text break-keep"></p>
+                                <div class="flex p-3 gap-3 bg-[#fdfdfd]">
+                                    <div class="w-14 h-14 bg-[#eef5fc] border-2 border-[#1a497d] shrink-0 relative overflow-hidden rounded">
+                                        <img src="https://raw.githubusercontent.com/kimazang/kimazang.github.io/main/az_devil.png" alt="아장" crossorigin="anonymous" class="w-full h-full object-cover">
+                                    </div>
+                                    <div class="speech-bubble flex-grow">
+                                        <div class="absolute -left-[9px] top-[18px] w-0 h-0 border-t-[5px] border-t-transparent border-r-[8px] border-r-[#1a497d] border-b-[5px] border-b-transparent"></div>
+                                        <div class="absolute -left-[6px] top-[18px] w-0 h-0 border-t-[5px] border-t-transparent border-r-[8px] border-r-white border-b-[5px] border-b-transparent z-10"></div>
+                                        <p id="final-friendship" class="text-xs font-bold capture-fix-text break-keep"></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div> 
             </div>
 
-            <div class="flex gap-2 mt-3 px-1 pb-1">
+            <div class="flex gap-2 mt-4 px-1 pb-1">
                 <button onclick="saveResultImage()" class="btn-pixel btn-start font-bold text-[1rem] w-1/2 !bg-[#f0547a] !text-white !shadow-[3px_3px_0px_#1a497d]">사진 저장</button>
                 <button onclick="location.reload()" class="btn-pixel btn-blue font-bold text-[1rem] w-1/2">다시 하기</button>
             </div>
@@ -212,6 +213,7 @@
     </div>
 
     <script>
+        // 질문 데이터 및 로직은 이전과 동일
         const questions = [
             { type: 'SN', q: "Q. 대기실에서 잠수 타며 멍 때릴 때, 내 머릿속은?", a: ["'쟤네 둘이 그렇고 그런 사인가?', '갑자기 성전환 하면 웃기겠다' 🌀", "N"], b: ["'렙업까지 경험치 얼마나 남았지?', '아까 본 그 옷 얼마더라?' 🧮", "S"] },
             { type: 'EI', q: "Q. 아장 님의 이벤트가 끝난 후 나의 상태는?", a: ["수고하셨습니다~ 하얗게 불태웠다... 🛏️", "I"], b: ["아, 재밌었다! 뒷풀이 할까요? 더 놀고 싶다! 🔥", "E"] },
@@ -317,20 +319,16 @@
         }
 
         function saveResultImage() {
-            const target = document.getElementById('capture-target');
-            // 저장 버튼을 누르는 동안 잠깐 텍스트 위치를 확실히 잡기 위해 옵션 추가
+            const target = document.getElementById('capture-area');
+            
+            // 캡처 설정 보정
             html2canvas(target, {
                 useCORS: true,
-                backgroundColor: "#eef5fc",
-                scale: 2,
+                backgroundColor: "#ffffff", // 배경을 흰색으로 고정
+                scale: 3, // 해상도를 더 높여 텍스트 뭉개짐 방지
                 logging: false,
-                onclone: (clonedDoc) => {
-                    // 클론된 문서에서 텍스트 정렬이 밀리지 않도록 재확인
-                    const desc = clonedDoc.getElementById('final-desc');
-                    const friend = clonedDoc.getElementById('final-friendship');
-                    if(desc) desc.style.lineHeight = "1.6";
-                    if(friend) friend.style.lineHeight = "1.6";
-                }
+                width: target.offsetWidth,
+                height: target.offsetHeight
             }).then(canvas => {
                 const imgUrl = canvas.toDataURL('image/png');
                 const link = document.createElement('a');
@@ -338,7 +336,7 @@
                 link.download = `${nickname}_큐플DNA.png`;
                 link.click();
             }).catch(err => {
-                alert('이미지 저장에 실패했습니다.');
+                alert('이미지 생성에 실패했습니다.');
             });
         }
     </script>
