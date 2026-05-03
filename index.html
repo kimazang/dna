@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>큐플레이 DNA 테스트</title>
+    <title>QPTI 테스트</title>
     
     <!-- ========================================== -->
     <!-- 💖 파비콘 및 SNS 미리보기(Open Graph) 설정 영역 -->
@@ -11,14 +11,14 @@
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/kimazang/kimazang.github.io/main/qp_favicon.png">
     
     <meta property="og:type" content="website">
-    <meta property="og:title" content="큐플레이 DNA 테스트">
-    <meta property="og:description" content="내 안의 숨겨진 큐플 본능은? 지금 바로 나의 유저 타입을 알아보자!">
-    <meta property="og:image" content="https://raw.githubusercontent.com/kimazang/dna/main/qplaydnatest_thum.png">
+    <meta property="og:title" content="큐플레이 성격 유형 테스트">
+    <meta property="og:description" content="내 안의 숨겨진 큐플 본능은? 지금 바로 나의 QPTI를 알아보자!">
+    <meta property="og:image" content="https://raw.githubusercontent.com/kimazang/dna/main/qpti_thum.png">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="큐플레이 DNA 테스트">
-    <meta name="twitter:description" content="내 안의 숨겨진 큐플 본능은? 지금 바로 나의 유저 타입을 알아보자!">
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/kimazang/dna/main/qplaydnatest_thum.png">
+    <meta name="twitter:title" content="큐플레이 성격 유형 테스트">
+    <meta name="twitter:description" content="내 안의 숨겨진 큐플 본능은? 지금 바로 나의 QPTI를 알아보자!">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/kimazang/dna/main/qpti_thum.png">
     <!-- ========================================== -->
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -140,7 +140,7 @@
         
         <div id="start-page" class="qplay-inner-box">
             <div class="qplay-header">
-                <span class="flex items-center gap-2"><span class="text-yellow-300">★</span> QUIZ_DNA.exe</span>
+                <span class="flex items-center gap-2"><span class="text-yellow-300">★</span> QPTI_TEST.exe</span>
                 <div class="win-btn-group">
                     <div class="win-btn"></div>
                     <div class="win-btn"></div>
@@ -149,8 +149,8 @@
             </div>
             
             <div class="p-5 bg-white m-2 border-2 border-dashed border-[#8cbcf0] text-center relative overflow-hidden">
-                <div class="inline-block px-3 py-1 bg-[#eef5fc] text-[#1a497d] text-sm mb-2 border-2 border-[#1a497d] font-bold">내 안의 숨겨진 큐플 본능은?</div>
-                <div class="my-2"><h1 class="text-4xl text-[#ffeb3b] pixel-text-shadow tracking-wide leading-tight inline-block">QPLAY DNA</h1></div>
+                <div class="inline-block px-3 py-1 bg-[#eef5fc] text-[#1a497d] text-sm mb-2 border-2 border-[#1a497d] font-bold">나의 큐플레이 성격 유형은?</div>
+                <div class="my-2"><h1 class="text-4xl text-[#ffeb3b] pixel-text-shadow tracking-wide leading-tight inline-block">QPlay Type Indicator</h1></div>
                 <div class="mb-4 mt-4 text-left">
                     <p class="text-sm mb-1 text-[#1a497d] ml-1 font-bold">닉네임</p>
                     <input type="text" id="user-nickname" class="qplay-input" placeholder="닉네임 입력" maxlength="8">
@@ -191,7 +191,7 @@
                     
                     <div class="p-4 bg-white m-2 border-2 border-[#eef5fc] relative text-center">
                         <div class="inline-flex items-center justify-center bg-[#1a497d] text-white text-xs mb-2" style="min-height: 24px; padding: 0 12px;">분석 완료</div>
-                        <h3 class="text-lg mb-2 font-bold"><span id="final-name" class="text-[#f0547a] text-xl"></span> 님의 유저 타입</h3>
+                        <h3 class="text-lg mb-2 font-bold"><span id="final-name" class="text-[#f0547a] text-xl"></span> 님의 QPTI</h3>
                         
                         <div class="mb-3">
                             <h2 id="final-title" class="text-xl text-[#1a497d] bg-[#ffeb3b] inline-flex items-center justify-center border-2 border-[#1a497d] shadow-[2px_2px_0px_#1a497d] font-bold" style="min-height: 46px; padding: 0 16px;"></h2>
@@ -253,22 +253,22 @@
         ];
 
         const results = {
-            "ENTJ": { title: "판을 이끄는 리더", desc: "카리스마로 방 전체를 압도하는 당신은 최고의 리더!<br>철저한 계획과 실행력으로 모든 게임을 승리로 이끌죠.", keywords: ["#타고난_리더", "#효율성_집착", "#야망_보스", "#전략적_사고"], friendship: "오늘 수다 코스는 너가 정해줘! 난 옆에서 신나게 떠들 준비 끝났어!" },
-            "ENTP": { title: "센스 있는 채팅러", desc: "번뜩이는 재치와 화려한 입담으로 대기실을 뒤집는 당신!<br>논리적인 토론을 즐기며 새로운 공략을 찾아내는 천재예요.", keywords: ["#아이디어_뱅크", "#유쾌한_관종", "#호기심_천국", "#팩트_폭격기"], friendship: "우리 둘이 놀면 조용할 틈이 없겠는데? 밤새 티키타카 하자!" },
-            "INTJ": { title: "조용한 전략가", desc: "남다른 통찰력으로 게임의 판도를 미리 읽는 전략가!<br>혼자만의 시간을 즐기며 완벽한 승리를 쟁취하는 타입이죠.", keywords: ["#완벽주의자", "#마스터마인드", "#확고한_취향", "#독립적_성향"], friendship: "뻔하지 않은 깊은 대화가 잘 통해서 너무 설레! 우리끼리만 아는 얘기 더 하자!" },
-            "INTP": { title: "파고드는 분석가", desc: "호기심 가득한 눈으로 큐플 원리를 파헤치는 분석가!<br>귀찮음도 이기는 지적 욕구로 남모르는 꿀팁을 찾아내요.", keywords: ["#게으른_천재", "#지적_호기심", "#마이웨이", "#논리적_분석"], friendship: "그런 특이하고 재밌는 생각은 대체 어떻게 하는 거야? 너무 흥미로워!" },
-            "ENFJ": { title: "리액션 끝판왕", desc: "따뜻한 리액션과 배려로 모든 유저를 하나로 묶는 마당발!<br>정의로운 마음으로 친구들의 고민을 다 들어주는 천사예요.", keywords: ["#인간_리트리버", "#따뜻한_카리스마", "#공감_만렙", "#프로_오지랖"], friendship: "와, 리액션 최고! 너랑 대화하면 자존감이 올라가는 기분이라 너무 좋아!" },
-            "ENFP": { title: "활발한 컨셉장인", desc: "통통 튀는 매력으로 어디서든 존재감을 뽐내는 메이커!<br>상상력 풍부한 당신은 큐플 세상의 자유로운 영혼입니다.", keywords: ["#인간_비타민", "#자유로운_영혼", "#상상력_대장", "#새로운_것이_좋아"], friendship: "혹시 내 쌍둥이 아니야? 우리 신나게 놀다가 잠수 타는 타이밍도 딱일 듯!" },
-            "INFJ": { title: "조용한 공감러", desc: "조용히 상대의 마음을 꿰뚫어 보는 신비로운 아우라!<br>겉은 부드럽지만 속은 누구보다 확고한 신념이 있습니다.", keywords: ["#겉바속촉", "#통찰력_갑", "#보이지_않는_배려", "#속마음_비밀"], friendship: "굳이 긴 말 안 해도 내 마음 다 읽어줄 것만 같아! 그냥 옆에만 있어도 힐링돼!" },
-            "INFP": { title: "감성 살리는 낭만러", desc: "풍부한 감수성으로 세상을 자신만의 색으로 채우는 낭만파!<br>조금은 내향적이지만 나만의 예술적 감각이 돋보여요.", keywords: ["#프로_몽상가", "#감성_충만", "#평화주의자", "#나만의_신념"], friendship: "우리 감성 완전 소울메이트급인데? 예쁜 옷 입고 앉아서 소소하게 떠드는 거 최고!" },
-            "ESTJ": { title: "흐름 잡는 리더", desc: "규칙과 질서를 사랑하며 책임을 다하는 든든한 유저!<br>효율적인 플레이로 큐플 경제를 이끄는 능력자랍니다.", keywords: ["#인간_엑셀", "#철저한_계획", "#책임감_끝판왕", "#팩트_체크"], friendship: "대화가 착착 진행돼서 너무 좋아! 오늘 못한 수다는 내일 또 이어서 하자!" },
-            "ESTP": { title: "즉흥적 행동파", desc: "강한 생존 본능과 적응력으로 서바이벌을 휩쓰는 행동파!<br>지루한 건 못 참아! 언제 어디서든 스릴을 즐깁니다.", keywords: ["#행동파_불도저", "#임기응변_갑", "#스릴_즐김", "#강한_적응력"], friendship: "고민은 사치! 당장 들어와서 같이 놀자! 너랑 있으면 뭘 해도 다 즐거워!" },
-            "ISTJ": { title: "묵묵한 성실러", desc: "묵묵히 자신의 자리를 지키며 성실히 렙업하는 노력파!<br>꼼꼼한 디테일과 기억력으로 완벽한 승리를 거둬요.", keywords: ["#원칙주의자", "#성실함의_표본", "#기억력_디테일", "#안정감_최고"], friendship: "내가 했던 사소한 말까지 다 기억해 주니 감동이야! 조근조근 대화하도록 해볼게." },
-            "ISTP": { title: "조용한 실속파", desc: "군더더기 없는 깔끔한 플레이를 선호하는 조용한 승부사!<br>뛰어난 기술로 위기 상황도 쿨하게 넘겨버립니다.", keywords: ["#효율성_최고", "#만사가_귀찮음", "#조용한_관찰자", "#팩트만_말함"], friendship: "억지로 말 안 이어가도 안 어색해서 너무 좋아! 그냥 같이 서 있기만 해도 이미 찐친!" },
-            "ESFJ": { title: "사람 챙기는 친목러", desc: "다정한 성격과 배려심으로 대기실을 밝히는 센스쟁이!<br>주변 친구들을 살뜰히 챙기며 모두에게 사랑받는 타입이죠.", keywords: ["#리액션_부자", "#인간관계_중심", "#친화력_대장", "#세심한_챙김"], friendship: "항상 챙겨줘서 고마워! 나도 이제부터 너의 1호 리액션 담당이 되어줄게!" },
-            "ESFP": { title: "시선 끄는 스타", desc: "화려한 아바타와 이펙트로 모든 이의 시선을 사로잡는 스타!<br>지금 이 순간의 즐거움을 가장 잘 아는 인기스타입니다.", keywords: ["#분위기_메이커", "#에너지_뿜뿜", "#즉흥적인_즐거움", "#낙천주의자"], friendship: "오늘 같이 웃고 떠드느라 광대 아플 예정! 너랑 있으면 세상에서 제일 신나!" },
-            "ISFJ": { title: "따뜻한 배려요정", desc: "보이지 않는 곳에서 친구를 도와주는 헌신적인 수호신!<br>디테일을 놓치지 않는 세심함의 끝판왕 존재랍니다.", keywords: ["#수호천사", "#조용한_헌신", "#디테일_장인", "#갈등은_싫어"], friendship: "내가 조용히 있고 싶을 때도 묵묵히 옆을 지켜줄 것 같아 든든해! 너도 언제든 불러줘!" },
-            "ISFP": { title: "느긋한 평화주의자", desc: "자유를 사랑하는 온화한 성격으로 현재를 즐기는 유저!<br>다툼보다는 평화를 선호하며 예술가적인 면모를 뽐내요.", keywords: ["#침대와_물아일체", "#갈등_회피러", "#예술적_감각", "#현재를_즐김"], friendship: "명당에 누워서 멍 때리며 수다나 떨자~ 님이랑 노는 게 제일 편하고 좋아!" }
+            "ENTJ": { title: "판을 이끄는 리더", desc: "카리스마로 방 전체를 압도하는 <br class="mo-br">당신은 최고의 리더!<br>철저한 계획과 실행력으로 <br class="mo-br">모든 게임을 승리로 이끌죠.", keywords: ["#타고난_리더", "#효율성_집착", "#야망_보스", "#전략적_사고"], friendship: "오늘 수다 코스는 너가 정해줘! 난 옆에서 신나게 떠들 준비 끝났어!" },
+            "ENTP": { title: "센스 있는 채팅러", desc: "번뜩이는 재치와 화려한 입담으로 <br class="mo-br">대기실을 뒤집는 당신!<br>논리적인 토론을 즐기며 <br class="mo-br">새로운 공략을 찾아내는 천재예요.", keywords: ["#아이디어_뱅크", "#유쾌한_관종", "#호기심_천국", "#팩트_폭격기"], friendship: "우리 둘이 놀면 조용할 틈이 없겠는데? 밤새 티키타카 하자!" },
+            "INTJ": { title: "조용한 전략가", desc: "남다른 통찰력으로 <br class="mo-br">게임의 판도를 미리 읽는 전략가!<br>혼자만의 시간을 즐기며 완벽한 승리를 <br class="mo-br">쟁취하는 타입이죠.", keywords: ["#완벽주의자", "#마스터마인드", "#확고한_취향", "#독립적_성향"], friendship: "뻔하지 않은 깊은 대화가 잘 통해서 너무 설레! 우리끼리만 아는 얘기 더 하자!" },
+            "INTP": { title: "파고드는 분석가", desc: "호기심 가득한 눈으로 <br class="mo-br">큐플 원리를 파헤치는 분석가!<br>귀찮음도 이기는 지적 욕구로 <br class="mo-br">남모르는 꿀팁을 찾아내요.", keywords: ["#게으른_천재", "#지적_호기심", "#마이웨이", "#논리적_분석"], friendship: "그런 특이하고 재밌는 생각은 대체 어떻게 하는 거야? 너무 흥미로워!" },
+            "ENFJ": { title: "리액션 끝판왕", desc: "따뜻한 리액션과 배려로 <br class="mo-br">모든 유저를 하나로 묶는 마당발!<br>정의로운 마음으로 친구들의 고민을 <br class="mo-br">다 들어주는 천사예요.", keywords: ["#인간_리트리버", "#따뜻한_카리스마", "#공감_만렙", "#프로_오지랖"], friendship: "와, 리액션 최고! 너랑 대화하면 자존감이 올라가는 기분이라 너무 좋아!" },
+            "ENFP": { title: "활발한 컨셉장인", desc: "통통 튀는 매력으로 <br class="mo-br">어디서든 존재감을 뽐내는 메이커!<br>상상력 풍부한 당신은 큐플 세상의 <br class="mo-br">자유로운 영혼입니다.", keywords: ["#인간_비타민", "#자유로운_영혼", "#상상력_대장", "#새로운_것이_좋아"], friendship: "혹시 내 쌍둥이 아니야? 우리 신나게 놀다가 잠수 타는 타이밍도 딱일 듯!" },
+            "INFJ": { title: "조용한 공감러", desc: "조용히 상대의 마음을 <br class="mo-br">꿰뚫어 보는 신비로운 아우라!<br>겉은 부드럽지만 속은 누구보다 <br class="mo-br">확고한 신념이 있습니다.", keywords: ["#겉바속촉", "#통찰력_갑", "#보이지_않는_배려", "#속마음_비밀"], friendship: "굳이 긴 말 안 해도 내 마음 다 읽어줄 것만 같아! 그냥 옆에만 있어도 힐링돼!" },
+            "INFP": { title: "감성 살리는 낭만러", desc: "풍부한 감수성으로 <br class="mo-br">세상을 자신만의 색으로 채우는 낭만파!<br>조금은 내향적이지만 <br class="mo-br">나만의 예술적 감각이 돋보여요.", keywords: ["#프로_몽상가", "#감성_충만", "#평화주의자", "#나만의_신념"], friendship: "우리 감성 완전 소울메이트급인데? 예쁜 옷 입고 앉아서 소소하게 떠드는 거 최고!" },
+            "ESTJ": { title: "흐름 잡는 리더", desc: "규칙과 질서를 사랑하며 <br class="mo-br">책임을 다하는 든든한 유저!<br>효율적인 플레이로 큐플 경제를 <br class="mo-br">이끄는 능력자랍니다.", keywords: ["#인간_엑셀", "#철저한_계획", "#책임감_끝판왕", "#팩트_체크"], friendship: "대화가 착착 진행돼서 너무 좋아! 오늘 못한 수다는 내일 또 이어서 하자!" },
+            "ESTP": { title: "즉흥적 행동파", desc: "강한 생존 본능과 적응력으로 <br class="mo-br">서바이벌을 휩쓰는 행동파!<br>지루한 건 못 참아! <br class="mo-br">언제 어디서든 스릴을 즐깁니다.", keywords: ["#행동파_불도저", "#임기응변_갑", "#스릴_즐김", "#강한_적응력"], friendship: "고민은 사치! 당장 들어와서 같이 놀자! 너랑 있으면 뭘 해도 다 즐거워!" },
+            "ISTJ": { title: "묵묵한 성실러", desc: "묵묵히 자신의 자리를 지키며 <br class="mo-br">성실히 렙업하는 노력파!<br>꼼꼼한 디테일과 기억력으로 <br class="mo-br">완벽한 승리를 거둬요.", keywords: ["#원칙주의자", "#성실함의_표본", "#기억력_디테일", "#안정감_최고"], friendship: "내가 했던 사소한 말까지 다 기억해 주니 감동이야! 조근조근 대화하도록 해볼게." },
+            "ISTP": { title: "조용한 실속파", desc: "군더더기 없는 깔끔한 플레이를 <br class="mo-br">선호하는 조용한 승부사!<br>뛰어난 기술로 위기 상황도 <br class="mo-br">쿨하게 넘겨버립니다.", keywords: ["#효율성_최고", "#만사가_귀찮음", "#조용한_관찰자", "#팩트만_말함"], friendship: "억지로 말 안 이어가도 안 어색해서 너무 좋아! 그냥 같이 서 있기만 해도 이미 찐친!" },
+            "ESFJ": { title: "사람 챙기는 친목러", desc: "다정한 성격과 배려심으로 <br class="mo-br">대기실을 밝히는 센스쟁이!<br>주변 친구들을 살뜰히 챙기며 <br class="mo-br">모두에게 사랑받는 타입이죠.", keywords: ["#리액션_부자", "#인간관계_중심", "#친화력_대장", "#세심한_챙김"], friendship: "항상 챙겨줘서 고마워! 나도 이제부터 너의 1호 리액션 담당이 되어줄게!" },
+            "ESFP": { title: "시선 끄는 스타", desc: "화려한 아바타와 이펙트로 <br class="mo-br">모든 이의 시선을 사로잡는 스타!<br>지금 이 순간의 즐거움을 <br class="mo-br">가장 잘 아는 인기스타입니다.", keywords: ["#분위기_메이커", "#에너지_뿜뿜", "#즉흥적인_즐거움", "#낙천주의자"], friendship: "오늘 같이 웃고 떠드느라 광대 아플 예정! 너랑 있으면 세상에서 제일 신나!" },
+            "ISFJ": { title: "따뜻한 배려요정", desc: "보이지 않는 곳에서 친구를 도와주는 <br class="mo-br">헌신적인 수호신!<br>디테일을 놓치지 않는 <br class="mo-br">세심함의 끝판왕 존재랍니다.", keywords: ["#수호천사", "#조용한_헌신", "#디테일_장인", "#갈등은_싫어"], friendship: "내가 조용히 있고 싶을 때도 묵묵히 옆을 지켜줄 것 같아 든든해! 너도 언제든 불러줘!" },
+            "ISFP": { title: "느긋한 평화주의자", desc: "자유를 사랑하는 온화한 성격으로 <br class="mo-br">현재를 즐기는 유저!<br>다툼보다는 평화를 선호하며 <br class="mo-br">예술가적인 면모를 뽐내요.", keywords: ["#침대와_물아일체", "#갈등_회피러", "#예술적_감각", "#현재를_즐김"], friendship: "명당에 누워서 멍 때리며 수다나 떨자~ 님이랑 노는 게 제일 편하고 좋아!" }
         };
 
         let nickname = "";
@@ -355,7 +355,7 @@
                     const imgUrl = canvas.toDataURL('image/png');
                     const link = document.createElement('a');
                     link.href = imgUrl;
-                    link.download = `${nickname}_큐플DNA.png`;
+                    link.download = `${nickname}_QPTI.png`;
                     link.click();
                 }).catch(err => {
                     alert('이미지 생성에 실패했습니다.');
