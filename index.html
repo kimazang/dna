@@ -107,6 +107,16 @@
         .hidden { display: none !important; }
         .win-btn-group { display: flex; gap: 4px; }
         .win-btn { width: 10px; height: 10px; border: 1px solid #1a497d; background: #fff; box-shadow: inset -1px -1px 0px rgba(0,0,0,0.1); }
+
+        .mo-br {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mo-br {
+        display: inline;
+    }
+}
     </style>
 </head>
 <body>
@@ -180,7 +190,7 @@
                 <!-- 분석 완료 섹션 (중앙 정렬) -->
                 <div class="text-center mb-4 relative z-10">
                     <div class="inline-block bg-[#1a497d] text-white px-3 py-1 text-xs mb-2">분석 완료</div>
-                    <h3 class="text-lg mb-2 font-bold"><span id="final-name" class="text-[#f0547a] text-xl"></span> 님 QPTI 유형</h3>
+                    <h3 class="text-lg mb-2 font-bold"><span id="final-name" class="text-[#f0547a] text-xl"></span>'s QPTI</h3>
                     
                     <div class="text-center w-full mb-3">
                         <h2 id="final-title" class="text-xl text-[#1a497d] mb-3 bg-[#ffeb3b] inline-block px-4 py-2 border-2 border-[#1a497d] shadow-[2px_2px_0px_#1a497d] font-bold"></h2>
@@ -241,7 +251,7 @@
             { type: 'TF', q: "Q. 너무 갖고 싶었던 레어템을 드디어 구해서 자랑했다! 내가 듣고 싶은 반응은?", a: ["우와! 매물 없던데 어떻게 구했어? 싸게 잘 샀네! 👏", "T"], b: ["대박! 너랑 완전 찰떡이야. 기분 진짜 좋겠다! 🎉", "F"] },
             { type: 'EI', q: "Q. 게임 몇 판 했더니 같은 방 유저가 친추를 걸었다!", a: ["'헉... 아직 좀 낯선데...' 고민 끝에 조심스레 Yes or No", "I"], b: ["다음에 또 같이 해요! 쿨하게 바로 수락하고 친목 모드 🤝", "E"] },
             { type: 'TF', q: "Q. 브레인 써바써바 중, 친구의 실수로 아쉽게 탈락할 때 내 속마음은?", a: ["아깝다... 친구한테 빨리 괜찮다고 해줘야지. 🥺", "F"], b: ["아깝다... 내가 계산기 켜놨으면 무조건 통과했는데. 🤔", "T"] },
-            { type: 'SN', q: "Q. 공지사항이나 패치노트가 올라왔을 때 나는?", a: ["이거 나오면 떡상각 아님? 앞으로 바뀔 게임 메타를 떠올려 본다. 💭", "N"], b: ["참여 방법, 가격, 리워드 등 정확한 팩트부터 꼼꼼히 정독한다. 📊", "S"] },
+            { type: 'SN', q: "Q. 공지사항이나 패치노트가 올라왔을 때 나는?", a: ["이거 나오면 떡상각 아님? 앞으로 바뀔 게임 메타를 떠올려 본다. 💭", "N"], b: ["일단 뭐가 바뀌었는지, 나한테 어떤 이득이 있는지부터 확인한다. 📊", "S"] },
             { type: 'JP', q: "Q. 오늘 밤 9시, 탱글아장배 싱글탱글 대회가 열린다!", a: ["8시 50분부터 이미 접속 완료. 손 풀면서 룰 한 번 더 숙지하고 대기한다. ⏰", "J"], b: ["8시 59분에 맞다, 오늘 대회지! 생각나서 헐레벌떡 뛰어 들어간다. 🏃‍♂️", "P"] }
         ];
 
